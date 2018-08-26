@@ -320,8 +320,12 @@ def filtro_fasce(request):
     form = CercaCorsi(request.GET)
     cerca = request.GET.get("q")
 
+    if corsi in ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9']:
+        meta = corsi
+        eval('corsi = Corso.objects.filter('+meta+'=True).order_by(\'titolo\')')
+        fascia = corsi 
 
-
+'''
     if corsi == 'f1':
         corsi = Corso.objects.filter(f1=True).order_by('titolo')
         fascia= 'f1'
@@ -349,7 +353,7 @@ def filtro_fasce(request):
     if corsi == 'f9':
         corsi = Corso.objects.filter(f9=True).order_by('titolo')
         fascia= 'f9'
-
+'''
 
     # if form.is_valid():
     #     if fascia== 'f1':
