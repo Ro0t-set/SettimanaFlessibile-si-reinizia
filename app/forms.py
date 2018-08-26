@@ -13,7 +13,7 @@ from .models import Corso, Iscrizione
 class CreaCorsi(forms.ModelForm):
     class Meta:
         model = Corso
-        fields = ['titolo','esperti_esterni', 'classi_autori', 'descrizione','aule', 'progressivo','f1','f2','f3','f4','f5','f6','f7','f8', 'f9' ]
+        fields = ['titolo','esperti_esterni','studente_referente1', 'studente_referente2','studente_referente3','studente_referente4','studente_referente5','classi_autori', 'descrizione','aule', 'progressivo','f1','f2','f3','f4','f5','f6','f7','f8','f9' ]
         widgets = {
             'titolo': forms.TextInput(attrs={'class': 'form-control'}),
             #'studenti_referenti': forms.TextInput(attrs={'class': 'form-control'}),

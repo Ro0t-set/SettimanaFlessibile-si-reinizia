@@ -19,11 +19,11 @@ class Aula(models.Model):
 
 class Corso(models.Model):
     titolo = models.CharField(max_length=100)
-    studente_referente1 = models.ForeignKey('auth.User', related_name='studente_referente1', default="")
-    studente_referente2 = models.ForeignKey('auth.User', related_name='studente_referente2', default="")
-    studente_referente3 = models.ForeignKey('auth.User', related_name='studente_referente3', default="")
-    studente_referente4 = models.ForeignKey('auth.User', related_name='studente_referente4', default="")
-    studente_referente5 = models.ForeignKey('auth.User', related_name='studente_referente5', default="")
+    studente_referente1 = models.ForeignKey('auth.User', related_name='studente_referente1', null=True)
+    studente_referente2 = models.ForeignKey('auth.User', related_name='studente_referente2', blank=True, null=True)
+    studente_referente3 = models.ForeignKey('auth.User', related_name='studente_referente3', blank=True, null=True)
+    studente_referente4 = models.ForeignKey('auth.User', related_name='studente_referente4', blank=True, null=True)
+    studente_referente5 = models.ForeignKey('auth.User', related_name='studente_referente5', blank=True, null=True)
     descrizione= models.TextField(blank=True)
     classi_autori = models.CharField(max_length=40, default="")
     esperti_esterni = models.CharField(max_length=100,blank=True, null=True, default="")
