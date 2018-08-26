@@ -1,0 +1,40 @@
+html, body{
+  background-image: url(sfondo.png);
+height: 100%;
+}
+.icone{
+	height: 25px;
+	width: auto;
+	color:blue;
+}
+
+.titoli{
+font-family: 'Permanent Marker', cursive;
+}
+
+#loading_screen{
+  display: none;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.spunta{
+  height: 90px;
+  width: auto;
+}
+
+#piedipagina {
+  height: 50px; /* regola l'altezza del piè di pagina */
+  margin-top: -50px;/* questi numeri devono essere opposti */
+}
+
+</style>

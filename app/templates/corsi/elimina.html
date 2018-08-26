@@ -1,0 +1,33 @@
+{% extends 'corsi/base.html' %}
+
+{% block content %}
+
+    {% for corso in corsi%}
+
+      <center>
+<div class="articolo_centrale">
+
+      <br>
+      <h2 class="titolo">Sicuro di voler eliminare l'iscrizione da "{{ corso.titolo|safe }}"</h2>
+
+
+
+
+
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+
+        <div style="display:none;">
+        {{form.as_p}}
+        </div>
+      <input type="submit" class="btn btn-danger"value="Elimina" />
+
+
+
+    </form>
+
+	</center>
+
+
+{% endfor %}
+{% endblock %}
