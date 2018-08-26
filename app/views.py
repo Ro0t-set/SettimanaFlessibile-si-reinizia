@@ -205,6 +205,10 @@ def edit_iscrizioni(request, corso_id):
 
                     if contatore<classe_max:
 
+                        for f in range(1, 10):
+                            fasciaf1 = eval('fasca.f'+str(f))
+                            idiscrizione = eval('iscrizione.corso{0}_id'.format(f))
+                        '''
                         if fasca.f1 and iscrizione.corso1_id != None:
                             return redirect('errorefasciapiena')
 
@@ -231,7 +235,7 @@ def edit_iscrizioni(request, corso_id):
 
                         if fasca.f9 and iscrizione.corso9_id != None:
                             return redirect('errorefasciapiena')
-
+                        '''
 
 
 
