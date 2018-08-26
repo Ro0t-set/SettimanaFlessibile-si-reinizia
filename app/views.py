@@ -96,7 +96,7 @@ def crea(request):
 
 @login_required(login_url='/login/')
 def home (request):
-    
+
      approvazione= Corso.objects.filter(studente_referente1=request.user)
 
      corsi = Corso.objects.all()
@@ -323,7 +323,8 @@ def filtro_fasce(request):
     if corsi in ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9']:
         meta = corsi
         eval('corsi = Corso.objects.filter('+meta+'=True).order_by(\'titolo\')')
-        fascia = corsi 
+        fascia = corsi
+    return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
 
 '''
     if corsi == 'f1':
@@ -360,7 +361,6 @@ def filtro_fasce(request):
     #         corsi = Corso.objects.filter(Q(titolo__icontains=cerca)|
     #         Q(descrizione__icontains=cerca))
 
-    return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
 
 @login_required(login_url='/login/')
 def elimina(request, corso_id):
