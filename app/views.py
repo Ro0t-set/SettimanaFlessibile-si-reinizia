@@ -185,28 +185,7 @@ def edit_iscrizioni(request, corso_id):
     contatore8= Iscrizione.objects.filter(corso8_id=fasca)
     contatore9= Iscrizione.objects.filter(corso9_id=fasca)
 
-'''
-    if singoli=='f1':
-        contatore=contatore1.count()
-    if singoli=='f2':
-        contatore=contatore2.count()
-    if singoli=='f3':
-        contatore=contatore3.count()
-    if singoli=='f4':
-        contatore=contatore4.count()
-    if singoli=='f5':
-        contatore=contatore5.count()
-    if singoli=='f6':
-        contatore=contatore6.count()
-    if singoli=='f7':
-        contatore=contatore7.count()
-    if singoli=='f8':
-        contatore=contatore8.count()
-    if singoli=='f9':
-        contatore=contatore9.count()
-'''
     contatore = eval('contatore'+str(singoli[1])+'.count()')
-
 
     if contatore>=classe_max:
         messages.error(request, 'Corso pieno!')
