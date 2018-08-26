@@ -321,8 +321,8 @@ def filtro_fasce(request):
     cerca = request.GET.get("q")
 
     if corsi in ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9']:
-        meta = corsi
-        eval('corsi = Corso.objects.filter('+meta+'=True).order_by(\'titolo\')')
+        meta = str(corsi)
+        corsi= eval('Corso.objects.filter('+meta+'=True).order_by("titolo")')
         fascia = corsi
     return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
 
