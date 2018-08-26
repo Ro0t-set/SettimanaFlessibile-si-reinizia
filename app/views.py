@@ -85,7 +85,7 @@ def crea(request):
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             corso.save()
-            msg.send()
+            #msg.send()
 
             return redirect('successo')
 
@@ -94,11 +94,14 @@ def crea(request):
 
     return render(request, 'corsi/crea.html', {'form' : form })
 
-
+@login_required(login_url='/login/')
 def home (request):
+    
+     approvazione= Corso.objects.filter(studente_referente1=request.user)
+
      corsi = Corso.objects.all()
 
-     return render(request, 'corsi/home.html', {'corsi': corsi})
+     return render(request, 'corsi/home.html', {'corsi': corsi, 'approvazione':approvazione})
 
 @login_required(login_url='/login/')
 def tabelle (request):

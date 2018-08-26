@@ -41,7 +41,12 @@ class Corso(models.Model):
     f7= models.BooleanField(default=False)
     f8= models.BooleanField(default=False)
     f9= models.BooleanField(default=False)
-    convalida= models.BooleanField(default=False)
+
+    convalida1= models.BooleanField(default=False)
+    convalida2= models.BooleanField(default=False)
+    convalida3= models.BooleanField(default=False)
+    convalida4= models.BooleanField(default=False)
+    convalida5= models.BooleanField(default=False)
 
 
 
