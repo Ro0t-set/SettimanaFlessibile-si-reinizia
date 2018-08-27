@@ -206,27 +206,7 @@ def edit_iscrizioni(request, corso_id):
     contatore8= Iscrizione.objects.filter(corso8_id=fasca)
     contatore9= Iscrizione.objects.filter(corso9_id=fasca)
 
-
-    if singoli=='f1':
-        contatore=contatore1.count()
-    if singoli=='f2':
-        contatore=contatore2.count()
-    if singoli=='f3':
-        contatore=contatore3.count()
-    if singoli=='f4':
-        contatore=contatore4.count()
-    if singoli=='f5':
-        contatore=contatore5.count()
-    if singoli=='f6':
-        contatore=contatore6.count()
-    if singoli=='f7':
-        contatore=contatore7.count()
-    if singoli=='f8':
-        contatore=contatore8.count()
-    if singoli=='f9':
-        contatore=contatore9.count()
-
-
+    contatore = eval('contatore'+str(singoli[1])+'.count()')
 
     if contatore>=classe_max:
         messages.error(request, 'Corso pieno!')
@@ -246,6 +226,13 @@ def edit_iscrizioni(request, corso_id):
 
                     if contatore<classe_max:
 
+                        for f in range(1, 10):
+                            fasciaf = eval('fasca.f'+str(f))
+                            idiscrizione = eval('iscrizione.corso{0}_id'.format(f))
+
+                            if  (fasciaf != None) and (idiscrizione != None):
+                                return redirect('errorefasciapiena')
+                        '''
                         if fasca.f1 and iscrizione.corso1_id != None:
                             return redirect('errorefasciapiena')
 
@@ -272,7 +259,7 @@ def edit_iscrizioni(request, corso_id):
 
                         if fasca.f9 and iscrizione.corso9_id != None:
                             return redirect('errorefasciapiena')
-
+                        '''
 
 
 
@@ -347,35 +334,6 @@ def filtro_fasce(request):
         fascia = corsi
     return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
 
-'''
-    if corsi == 'f1':
-        corsi = Corso.objects.filter(f1=True).order_by('titolo')
-        fascia= 'f1'
-    if corsi == 'f2':
-        corsi = Corso.objects.filter(f2=True).order_by('titolo')
-        fascia= 'f2'
-    if corsi == 'f3':
-        corsi = Corso.objects.filter(f3=True).order_by('titolo')
-        fascia= 'f3'
-    if corsi == 'f4':
-        corsi = Corso.objects.filter(f4=True).order_by('titolo')
-        fascia= 'f4'
-    if corsi == 'f5':
-        corsi = Corso.objects.filter(f5=True).order_by('titolo')
-        fascia= 'f5'
-    if corsi == 'f6':
-        corsi = Corso.objects.filter(f6=True).order_by('titolo')
-        fascia= 'f6'
-    if corsi == 'f7':
-        corsi = Corso.objects.filter(f7=True).order_by('titolo')
-        fascia= 'f7'
-    if corsi == 'f8':
-        corsi = Corso.objects.filter(f8=True).order_by('titolo')
-        fascia= 'f8'
-    if corsi == 'f9':
-        corsi = Corso.objects.filter(f9=True).order_by('titolo')
-        fascia= 'f9'
-'''
 
     # if form.is_valid():
     #     if fascia== 'f1':
