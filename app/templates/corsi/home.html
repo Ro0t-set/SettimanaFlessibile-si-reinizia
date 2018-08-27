@@ -1,33 +1,7 @@
 {% extends 'corsi/base.html' %}
 
 {% block content %}
-<div id="loading_screen">
-  <h1>Loading...</h1>
-  <p>La pagina è in caricamento<br/>
-  Resta connesso e non cambiare sito!</p>
-</div>
-<script type="text/javascript">
-mostra_loading_screen();
-</script>
 
-<script type="text/javascript">
-(function(){
-  if (window.addEventListener)
-  {
-    window.addEventListener("load", nascondi_loading_screen, false);
-  }else{
-    window.attachEvent("onload", nascondi_loading_screen);
-  }
-})();
-function mostra_loading_screen()
-{
-  document.getElementById("loading_screen").style.display = 'block';
-}
-function nascondi_loading_screen()
-{
-  document.getElementById("loading_screen").style.display = 'none';
-}
-</script>
 
 <h1 class="titoli" style="font-family: 'Permanent Marker', cursive;">Settimana Flessibile</h1>
 <h3 style="color:red;">Info:</h3>
@@ -38,9 +12,27 @@ function nascondi_loading_screen()
 <p>5)Nel caso in cui dovessi riscontrare difficoltà nelle iscrizioni o problemi di qualsiasi genere, puoi contattare lo Staff della settimana flessibile tramite la pagina "Help"</p>
 <p>6)Provvederemo a rispondere ad ogni singola richiesta tramite la mail che inserirai</p>
 <br>
-
+{%for approvazione in approvazione%}
+  <form method="POST" class="post-form">
+    {% csrf_token %}
 <h3>Autorizzazioni:</h3>
-{{approvazione}}
+<p id="corso{{approvazione}}"></p>
 
+
+<a id="bottone{{approvazione}}" class="save btn btn-primary" href="">salva</a>
+<script type="text/javascript">
+var approvazione = "{{approvazione}}";
+var approvazione_split = approvazione.split('-');
+var nome = approvazione_split[0];
+var numero = approvazione_split[1];
+var numero = numero.toString();
+document.getElementById("bottone{{approvazione}}").href = '?idreferente='+numero;
+document.getElementById("corso{{approvazione}}").innerHTML = nome;
+</script>
+
+</form>
+<br>
+<br>
+{%endfor%}
 
 {% endblock content %}
