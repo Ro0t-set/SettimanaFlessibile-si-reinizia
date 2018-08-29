@@ -97,11 +97,32 @@ def crea(request):
 @login_required(login_url='/login/')
 def home (request):
 
-     approvazione= Corso.objects.filter(studente_referente1=request.user)
+    approvazione=[]
+    for i in range(1,5):
+        i=str(i)
+        try:
+            selezione_della_approvazione= str(eval('Corso.objects.get(studente_referente'+i+'=request.user)'))
+            approvazione.append(selezione_della_approvazione+"-"+i)
+        except:
+            pass
 
-     corsi = Corso.objects.all()
+    # for approvazione in approvazione:
+    #     nome_corso, numero_corso = approvazione.split('-')
+    #     print(nome_corso)
 
-     return render(request, 'corsi/home.html', {'corsi': corsi, 'approvazione':approvazione})
+
+    if request.method == "GET":
+        id_referente = str(request.GET.get("idreferente"))
+        if id_referente != "None":
+            corso_convalidato=(eval('Corso.objects.get(studente_referente'+id_referente+'=request.user)'))
+            corso_convalidato=eval('corso_convalidato.convalida'+id_referente)
+            print(corso_convalidato)
+            corso_convalidato = True
+            print(corso_convalidato)
+            corso_convalidato.save(commit=False)
+
+
+    return render(request, 'corsi/home.html', { 'approvazione':approvazione})
 
 @login_required(login_url='/login/')
 def tabelle (request):
