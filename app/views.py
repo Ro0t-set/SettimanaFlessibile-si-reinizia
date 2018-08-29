@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Corso, Iscrizione
+from .models import Corso, Iscrizione, Approvazione
 from django.shortcuts import get_object_or_404, render
-from .forms import CreaCorsi, IscrizioneForm, Mail, CercaCorsi
+from .forms import CreaCorsi, IscrizioneForm, Mail, CercaCorsi, ConvalidaCorsi
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -61,8 +61,7 @@ def disp_classi_palestra(request):
 
 @login_required(login_url='/login/')
 def crea(request):
-
-
+    convalida= ConvalidaCorsi
     if request.method == "POST":
 
         form = CreaCorsi(request.POST)
@@ -70,6 +69,8 @@ def crea(request):
         if form.is_valid():
 
             corso = form.save(commit=False)
+            #convalida = convalida.save(commit=False)
+
             corso.author = request.user
             corso.published_date = timezone.now()
 
@@ -86,43 +87,67 @@ def crea(request):
             msg.attach_alternative(html_content, "text/html")
             corso.save()
             #msg.send()
+            for i in range(1,5):
+                i=str(i)
+                if eval('corso.studente_referente'+i) != None:
+                    convalida=Approvazione.objects.create(corso_id= corso.id)
+                    convalida.alunno = eval('corso.studente_referente'+i)
+                    convalida.save()
 
             return redirect('successo')
 
     else:
         form = CreaCorsi()
 
-    return render(request, 'corsi/crea.html', {'form' : form })
+
+    return render(request, 'corsi/crea.html', {'form' : form , 'convalida':convalida})
 
 @login_required(login_url='/login/')
 def home (request):
 
-    approvazione=[]
-    for i in range(1,5):
-        i=str(i)
-        try:
-            selezione_della_approvazione= str(eval('Corso.objects.get(studente_referente'+i+'=request.user)'))
-            approvazione.append(selezione_della_approvazione+"-"+i)
-        except:
-            pass
+    # approvazione=[]
+    # for i in range(1,5):
+    #     i=str(i)
+    #     try:
+    #         selezione_della_approvazione= str(eval('Corso.objects.get(studente_referente'+i+'=request.user)'))
+    #         approvazione.append(selezione_della_approvazione)
+    #
+    #     except:
+    #         pass
+    #
+    #
+    #
+    # if request.method == "POST":
+    #     corso_da_approvare = str(request.POST.get("name"))
+    #     print(corso_da_approvare)
+    #     ccorso_convalidato= eval('Corso.objects.get(titolo='+corso_da_approvare+')')
+    #     form = CreaCorsi(request.POST, instance = corso_da_approvare)
+    #     if form.is_valid():
+    #         print("cazzo")
+    #         conferma = form.save(commit=False)
+    #         conferma.save()
+    #
+    # else:
+    #     form=CreaCorsi(instance = corso_da_approvare)
+
+
 
     # for approvazione in approvazione:
     #     nome_corso, numero_corso = approvazione.split('-')
     #     print(nome_corso)
 
 
-    if request.method == "GET":
-        id_referente = str(request.GET.get("idreferente"))
-        if id_referente != "None":
-            corso_convalidato=(eval('Corso.objects.get(studente_referente'+id_referente+'=request.user)'))
-            corso_convalidato=eval('corso_convalidato.convalida'+id_referente)
-            print(corso_convalidato)
-            corso_convalidato = True
-            print(corso_convalidato)
-            corso_convalidato.save(commit=False)
+        # id_referente = str(request.GET.get("idreferente"))
+        # if id_referente != "None":
+        #     corso_convalidato=(eval('Corso.objects.get(studente_referente'+id_referente+'=request.user)'))
+        #     corso_convalidato=eval('corso_convalidato.convalida'+id_referente)
+        #     print(corso_convalidato)
+        #     corso_convalidato = True
+        #     print(corso_convalidato)
+        #     corso_convalidato.save(commit=False)
 
 
-    return render(request, 'corsi/home.html', { 'approvazione':approvazione})
+    return render(request, 'corsi/home.html', {})
 
 @login_required(login_url='/login/')
 def tabelle (request):
