@@ -27,5 +27,4 @@ urlpatterns = [
     url(r'^disp_classi_informatica/$', views.disp_classi_informatica,  name='disp_classi_informatica'),
     url(r'^disp_classi_arte/$', views.disp_classi_arte,  name='disp_classi_arte'),
     url(r'^disp_classi/$', views.disp_classi,  name='disp_classi'),
-    url(r'^editiscrizionitest/$', views.test),
 ]
