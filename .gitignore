@@ -1,0 +1,5 @@
+
+.DS_Store
+*.pyc
+*.pyc
+app/__pycache__/urls.cpython-36.pyc

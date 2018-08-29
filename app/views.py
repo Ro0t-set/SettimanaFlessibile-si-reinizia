@@ -405,3 +405,7 @@ def help(request):
     else:
         form = Mail()
     return render(request, 'corsi/help.html', {'form': form})
+
+
+def test(request):
+    return 1
