@@ -231,7 +231,6 @@ def edit_iscrizioni(request, corso_id):
     contatore8= Iscrizione.objects.filter(corso8_id=fasca)
     contatore9= Iscrizione.objects.filter(corso9_id=fasca)
 
-    contatore = eval('contatore'+str(singoli[1])+'.count()')
 
     if contatore>=classe_max:
         messages.error(request, 'Corso pieno!')
@@ -285,6 +284,7 @@ def edit_iscrizioni(request, corso_id):
                         if fasca.f9 and iscrizione.corso9_id != None:
                             return redirect('errorefasciapiena')
                         '''
+
 
 
 
