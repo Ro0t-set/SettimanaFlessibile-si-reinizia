@@ -42,11 +42,7 @@ class Corso(models.Model):
     f8= models.BooleanField(default=False)
     f9= models.BooleanField(default=False)
 
-    convalida1= models.BooleanField(default=False)
-    convalida2= models.BooleanField(default=False)
-    convalida3= models.BooleanField(default=False)
-    convalida4= models.BooleanField(default=False)
-    convalida5= models.BooleanField(default=False)
+    convalida= models.BooleanField(default=False)
 
 
 
@@ -66,6 +62,14 @@ class Corso(models.Model):
     def __str__(self):
         return str(self.titolo)
 
+class Approvazione(models.Model):
+    corso= models.ForeignKey('Corso', blank=True, null=True)
+    alunno= models.ForeignKey('auth.User', blank=True, null=True)
+    convalida= models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Approvazione"
+        verbose_name_plural = "Approvazioni"
 
 
 

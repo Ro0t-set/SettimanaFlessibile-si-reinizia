@@ -6,7 +6,7 @@ import re
 from django.forms import BaseModelFormSet
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-from .models import Corso, Iscrizione
+from .models import Corso, Iscrizione, Approvazione
 
 
 
@@ -23,6 +23,10 @@ class CreaCorsi(forms.ModelForm):
 
         }
 
+class ConvalidaCorsi(forms.ModelForm):
+    class Meta:
+        model = Approvazione
+        fields = ['corso','alunno','convalida']
 
 
 class IscrizioneForm(forms.ModelForm):

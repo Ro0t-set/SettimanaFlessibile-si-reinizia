@@ -16,18 +16,20 @@
   <form method="POST" class="post-form">
     {% csrf_token %}
 <h3>Autorizzazioni:</h3>
+{{approvazione}}
+<div style='display:none;'> {{form}} </div>
+{{form.convalida}}
+<button type="submit" id="bottone{{approvazione}}" class="save btn btn-primary"  name="">Accetto</button>
+
 <p id="corso{{approvazione}}"></p>
-
-
-<a id="bottone{{approvazione}}" class="save btn btn-primary" href="">salva</a>
 <script type="text/javascript">
 var approvazione = "{{approvazione}}";
 var approvazione_split = approvazione.split('-');
 var nome = approvazione_split[0];
 var numero = approvazione_split[1];
 var numero = numero.toString();
-document.getElementById("bottone{{approvazione}}").href = '?idreferente='+numero;
 document.getElementById("corso{{approvazione}}").innerHTML = nome;
+document.getElementById("bottone{{approvazione}}").name = nome;
 </script>
 
 </form>
