@@ -107,6 +107,7 @@ def crea(request):
 
 @login_required(login_url='/login/')
 def home (request):
+    return render(request, 'corsi/home.html', {})
 
     # approvazione=[]
     # for i in range(1,5):
@@ -150,11 +151,6 @@ def home (request):
         #     corso_convalidato.save(commit=False)
 
 
-def home (request):
-     corsi = Corso.objects.all()
-
-
-    return render(request, 'corsi/home.html', {})
 
 @login_required(login_url='/login/')
 def tabelle (request):
