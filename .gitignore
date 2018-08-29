@@ -3,3 +3,4 @@
 *.pyc
 *.pyc
 app/__pycache__/urls.cpython-36.pyc
+db.sqlite3
