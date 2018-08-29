@@ -86,6 +86,7 @@ def crea(request):
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             corso.save()
+
             #msg.send()
             for i in range(1,5):
                 i=str(i)
@@ -94,6 +95,7 @@ def crea(request):
                     convalida.alunno = eval('corso.studente_referente'+i)
                     convalida.save()
 
+
             return redirect('successo')
 
     else:
@@ -101,6 +103,7 @@ def crea(request):
 
 
     return render(request, 'corsi/crea.html', {'form' : form , 'convalida':convalida})
+
 
 @login_required(login_url='/login/')
 def home (request):
@@ -145,6 +148,10 @@ def home (request):
         #     corso_convalidato = True
         #     print(corso_convalidato)
         #     corso_convalidato.save(commit=False)
+
+
+def home (request):
+     corsi = Corso.objects.all()
 
 
     return render(request, 'corsi/home.html', {})
@@ -232,6 +239,27 @@ def edit_iscrizioni(request, corso_id):
     contatore9= Iscrizione.objects.filter(corso9_id=fasca)
 
 
+    if singoli=='f1':
+        contatore=contatore1.count()
+    if singoli=='f2':
+        contatore=contatore2.count()
+    if singoli=='f3':
+        contatore=contatore3.count()
+    if singoli=='f4':
+        contatore=contatore4.count()
+    if singoli=='f5':
+        contatore=contatore5.count()
+    if singoli=='f6':
+        contatore=contatore6.count()
+    if singoli=='f7':
+        contatore=contatore7.count()
+    if singoli=='f8':
+        contatore=contatore8.count()
+    if singoli=='f9':
+        contatore=contatore9.count()
+
+
+
     if contatore>=classe_max:
         messages.error(request, 'Corso pieno!')
         return redirect('/filtro_fasce/?f='+singoli)
@@ -250,13 +278,6 @@ def edit_iscrizioni(request, corso_id):
 
                     if contatore<classe_max:
 
-                        for f in range(1, 10):
-                            fasciaf = eval('fasca.f'+str(f))
-                            idiscrizione = eval('iscrizione.corso{0}_id'.format(f))
-
-                            if  (fasciaf != None) and (idiscrizione != None):
-                                return redirect('errorefasciapiena')
-                        '''
                         if fasca.f1 and iscrizione.corso1_id != None:
                             return redirect('errorefasciapiena')
 
@@ -283,7 +304,6 @@ def edit_iscrizioni(request, corso_id):
 
                         if fasca.f9 and iscrizione.corso9_id != None:
                             return redirect('errorefasciapiena')
-                        '''
 
 
 
@@ -353,11 +373,35 @@ def filtro_fasce(request):
     form = CercaCorsi(request.GET)
     cerca = request.GET.get("q")
 
-    if corsi in ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9']:
-        meta = str(corsi)
-        corsi= eval('Corso.objects.filter('+meta+'=True).order_by("titolo")')
-        fascia = corsi
-    return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
+
+
+    if corsi == 'f1':
+        corsi = Corso.objects.filter(f1=True).order_by('titolo')
+        fascia= 'f1'
+    if corsi == 'f2':
+        corsi = Corso.objects.filter(f2=True).order_by('titolo')
+        fascia= 'f2'
+    if corsi == 'f3':
+        corsi = Corso.objects.filter(f3=True).order_by('titolo')
+        fascia= 'f3'
+    if corsi == 'f4':
+        corsi = Corso.objects.filter(f4=True).order_by('titolo')
+        fascia= 'f4'
+    if corsi == 'f5':
+        corsi = Corso.objects.filter(f5=True).order_by('titolo')
+        fascia= 'f5'
+    if corsi == 'f6':
+        corsi = Corso.objects.filter(f6=True).order_by('titolo')
+        fascia= 'f6'
+    if corsi == 'f7':
+        corsi = Corso.objects.filter(f7=True).order_by('titolo')
+        fascia= 'f7'
+    if corsi == 'f8':
+        corsi = Corso.objects.filter(f8=True).order_by('titolo')
+        fascia= 'f8'
+    if corsi == 'f9':
+        corsi = Corso.objects.filter(f9=True).order_by('titolo')
+        fascia= 'f9'
 
 
     # if form.is_valid():
@@ -365,6 +409,7 @@ def filtro_fasce(request):
     #         corsi = Corso.objects.filter(Q(titolo__icontains=cerca)|
     #         Q(descrizione__icontains=cerca))
 
+    return render(request, 'corsi/filtro_fasce.html', {'corsi' : corsi, 'fascia': fascia, 'form':form})
 
 @login_required(login_url='/login/')
 def elimina(request, corso_id):
